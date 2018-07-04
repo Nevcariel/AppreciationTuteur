@@ -33,6 +33,11 @@ class Duree
         $this->stages = new ArrayCollection();
     }
 
+    public function __toString(): ?string
+    {
+        return $this->intitule;
+    }
+
     public function getId()
     {
         return $this->id;

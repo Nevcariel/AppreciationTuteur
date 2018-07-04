@@ -21,11 +21,6 @@ class Reponse
      */
     private $reponse;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="reponses")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $question;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Enquete", inversedBy="reponses")
@@ -52,18 +47,6 @@ class Reponse
     public function setReponse(string $reponse): self
     {
         $this->reponse = $reponse;
-
-        return $this;
-    }
-
-    public function getQuestion(): ?Question
-    {
-        return $this->question;
-    }
-
-    public function setQuestion(?Question $question): self
-    {
-        $this->question = $question;
 
         return $this;
     }

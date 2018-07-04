@@ -64,7 +64,7 @@ class Tuteur
     private $enquetes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="tuteur", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="tuteur", orphanRemoval=true, cascade={"persist"})
      */
     private $reponses;
 
@@ -79,6 +79,12 @@ class Tuteur
         $this->enquetes = new ArrayCollection();
         $this->reponses = new ArrayCollection();
         $this->stages = new ArrayCollection();
+    }
+
+    public function __toString(): ?string
+    {
+        $res = $this->prenom." ".$this->nom;
+        return $res;
     }
 
     public function getId()

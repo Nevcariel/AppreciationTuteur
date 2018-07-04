@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="col-lg-6 offset-lg-3 mt-5">
+    {{ form_start(questionnaireForm) }}
+        {% for reponseField in questionnaireForm.reponses %}
+            <h3>{{ questions[loop.index0] }}</h3>
+            {{ form_widget(reponseField) }}
+        {% endfor %}
+    {{ form_end(questionnaireForm) }}
+</div>
+{% endblock %}

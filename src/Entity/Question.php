@@ -28,20 +28,26 @@ class Question
      */
     private $contenu;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeReponse", inversedBy="questions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $typeQuestion;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="question")
+     * @ORM\Column(type="boolean")
      */
-    private $reponses;
+    private $choix;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $multiple;
+
 
     public function __construct()
     {
-        $this->reponses = new ArrayCollection();
+        
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->contenu;
     }
 
     public function getId()
@@ -73,45 +79,26 @@ class Question
         return $this;
     }
 
-    public function getTypeQuestion(): ?TypeReponse
+    public function getChoix(): ?bool
     {
-        return $this->typeQuestion;
+        return $this->choix;
     }
 
-    public function setTypeQuestion(?TypeReponse $typeQuestion): self
+    public function setChoix(bool $choix): self
     {
-        $this->typeQuestion = $typeQuestion;
+        $this->choix = $choix;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Reponse[]
-     */
-    public function getReponses(): Collection
+    public function getMultiple(): ?bool
     {
-        return $this->reponses;
+        return $this->multiple;
     }
 
-    public function addReponse(Reponse $reponse): self
+    public function setMultiple(bool $multiple): self
     {
-        if (!$this->reponses->contains($reponse)) {
-            $this->reponses[] = $reponse;
-            $reponse->setQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReponse(Reponse $reponse): self
-    {
-        if ($this->reponses->contains($reponse)) {
-            $this->reponses->removeElement($reponse);
-            // set the owning side to null (unless already changed)
-            if ($reponse->getQuestion() === $this) {
-                $reponse->setQuestion(null);
-            }
-        }
+        $this->multiple = $multiple;
 
         return $this;
     }

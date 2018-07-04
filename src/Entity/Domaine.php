@@ -33,6 +33,11 @@ class Domaine
         $this->tuteurs = new ArrayCollection();
     }
 
+    public function __toString(): ?string
+    {
+        return "Plutôt ".$this->intitule;
+    }
+
     public function getId()
     {
         return $this->id;

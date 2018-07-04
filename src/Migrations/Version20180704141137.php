@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180703132244 extends AbstractMigration
+final class Version20180704141137 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -26,8 +26,8 @@ final class Version20180703132244 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_D6D86B2986EC68D8 ON enquete (tuteur_id)');
         $this->addSql('CREATE TABLE entreprise (id INTEGER NOT NULL, nom VARCHAR(255) NOT NULL, ville VARCHAR(255) NOT NULL, code_postal VARCHAR(5) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE formation (id INTEGER NOT NULL, intitule VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE question (id INTEGER NOT NULL, type_question_id INTEGER NOT NULL, theme VARCHAR(255) NOT NULL, contenu CLOB NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_B6F7494E553E212E ON question (type_question_id)');
+        $this->addSql('CREATE TABLE question (id INTEGER NOT NULL, theme VARCHAR(255) NOT NULL, contenu CLOB NOT NULL, reponses CLOB DEFAULT NULL --(DC2Type:array)
+        , choix BOOLEAN NOT NULL, multiple BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE reponse (id INTEGER NOT NULL, question_id INTEGER NOT NULL, enquete_id INTEGER NOT NULL, tuteur_id INTEGER NOT NULL, reponse VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_5FB6DEC71E27F6BF ON reponse (question_id)');
         $this->addSql('CREATE INDEX IDX_5FB6DEC75FDC5003 ON reponse (enquete_id)');
@@ -41,7 +41,6 @@ final class Version20180703132244 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_4F62F7315200282E ON stagiaire (formation_id)');
         $this->addSql('CREATE TABLE tuteur (id INTEGER NOT NULL, entreprise_id INTEGER DEFAULT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, telephone VARCHAR(255) DEFAULT NULL, fonction VARCHAR(255) NOT NULL, informatique BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_56412268A4AEAFEA ON tuteur (entreprise_id)');
-        $this->addSql('CREATE TABLE type_reponse (id INTEGER NOT NULL, intitule VARCHAR(255) NOT NULL, choix BOOLEAN NOT NULL, multiple BOOLEAN NOT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema) : void
@@ -61,6 +60,5 @@ final class Version20180703132244 extends AbstractMigration
         $this->addSql('DROP TABLE stage');
         $this->addSql('DROP TABLE stagiaire');
         $this->addSql('DROP TABLE tuteur');
-        $this->addSql('DROP TABLE type_reponse');
     }
 }

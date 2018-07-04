@@ -13,7 +13,6 @@ use App\Entity\Reponse;
 use App\Entity\Stage;
 use App\Entity\Stagiaire;
 use App\Entity\Tuteur;
-use App\Entity\TypeReponse;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -32,7 +31,7 @@ class AppFixtures extends Fixture
       $entreprisesNom = ["Leclerc", "SuperU", "Auchan"];
       $entrepriseVille = "Amiens";
       $entrepriseCP = "80000";
-      $typesReponseIntitule = ["Saisie", "Choix", "Choix multiple"];
+      $reponses = ["Peu satisfait", "Satisfait", "Très Satisfait"];
       $dureesIntitule = ["9- semaines", "10/12 semaines", "12+ semaines"];
       $difficulteesIntitule = ["Facile", "Moyen", "Difficile"];
       $date = new \DateTime();
@@ -50,7 +49,7 @@ class AppFixtures extends Fixture
         $entreprise = new Entreprise();
         $question = new Question();
         $stage = new Stage();
-        $typeReponse = new TypeReponse();
+        $reponse = new Reponse();
 
         $entreprise->setNom($entreprisesNom[$i]);
         $entreprise->setVille($entrepriseVille);
@@ -85,13 +84,16 @@ class AppFixtures extends Fixture
         $enquete->setStage($stage);
         $enquete->setTuteur($tuteur);
 
-        $typeReponse->setIntitule($typesReponseIntitule[$i]);
-        $typeReponse->setChoix(true);
-        $typeReponse->setMultiple(false);
-
         $question->setTheme($questionsTheme[$i]);
         $question->setContenu($questionsTheme[$i]);
-        $typeReponse->addQuestion($question);
+        $question->setChoix(true);
+        $question->setMultiple(false);
+
+        $question->addReponse($reponses);
+        $reponse->setReponse($reponses[$i]);
+        $tuteur->addReponse($reponse);
+        $enquete->addReponse($reponse);
+
 
         $manager->persist($difficulte);
         $manager->persist($domaine);
@@ -103,7 +105,7 @@ class AppFixtures extends Fixture
         $manager->persist($stage);
         $manager->persist($stagiaire);
         $manager->persist($tuteur);
-        $manager->persist($typeReponse);
+        $manager->persist($reponse);
       }
 
       $manager->flush();

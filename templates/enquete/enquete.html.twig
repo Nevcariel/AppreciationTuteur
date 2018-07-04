@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="col-lg-6 offset-lg-3 mt-5">
+    {{ form_start(enqueteForm) }}
+        {{ form_row(enqueteForm.stage) }}
+        {{ form_row(enqueteForm.tuteur) }}
+    {{ form_end(enqueteForm) }}
+</div>
+{% endblock %}

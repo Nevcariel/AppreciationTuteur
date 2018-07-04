@@ -37,6 +37,12 @@ class Stagiaire
      */
     private $stage;
 
+    public function __toString(): ?string
+    {
+        $res = $this->prenom." ".$this->nom;
+        return $res;
+    }
+
     public function getId()
     {
         return $this->id;
