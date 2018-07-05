@@ -17,12 +17,6 @@ class Reponse
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $reponse;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Enquete", inversedBy="reponses")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -40,21 +34,14 @@ class Reponse
      */
     private $question;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ReponsePossible", inversedBy="reponses")
+     */
+    private $reponse;
+
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getReponse(): ?string
-    {
-        return $this->reponse;
-    }
-
-    public function setReponse(string $reponse): self
-    {
-        $this->reponse = $reponse;
-
-        return $this;
     }
 
     public function getEnquete(): ?Enquete
@@ -89,6 +76,18 @@ class Reponse
     public function setQuestion(?Question $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getReponse(): ?ReponsePossible
+    {
+        return $this->reponse;
+    }
+
+    public function setReponse(?ReponsePossible $reponse): self
+    {
+        $this->reponse = $reponse;
 
         return $this;
     }

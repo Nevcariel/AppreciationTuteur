@@ -19,40 +19,26 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $theme;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $contenu;
 
-
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeReponse", inversedBy="question")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $choix;
+    private $typeReponse;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $multiple;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ReponsePossible", mappedBy="question", orphanRemoval=true)
      */
     private $reponsesPossibles;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="question", orphanRemoval=true)
-     */
-    private $reponses;
 
 
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
+        $this->reponsesPossibles = new ArrayCollection();
     }
 
     public function __toString(): ?string
@@ -63,18 +49,6 @@ class Question
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getTheme(): ?string
-    {
-        return $this->theme;
-    }
-
-    public function setTheme(string $theme): self
-    {
-        $this->theme = $theme;
-
-        return $this;
     }
 
     public function getContenu(): ?string
@@ -89,67 +63,43 @@ class Question
         return $this;
     }
 
-    public function getChoix(): ?bool
+    public function getTypeReponse(): ?TypeReponse
     {
-        return $this->choix;
+        return $this->typeReponse;
     }
 
-    public function setChoix(bool $choix): self
+    public function setTypeReponse(?TypeReponse $typeReponse): self
     {
-        $this->choix = $choix;
-
-        return $this;
-    }
-
-    public function getMultiple(): ?bool
-    {
-        return $this->multiple;
-    }
-
-    public function setMultiple(bool $multiple): self
-    {
-        $this->multiple = $multiple;
-
-        return $this;
-    }
-
-    public function getReponsesPossibles(): ?array
-    {
-        return $this->reponsesPossibles;
-    }
-
-    public function setReponsesPossibles(?array $reponsesPossibles): self
-    {
-        $this->reponsesPossibles = $reponsesPossibles;
+        $this->typeReponse = $typeReponse;
 
         return $this;
     }
 
     /**
-     * @return Collection|Reponse[]
+     * @return Collection|ReponsePossible[]
      */
-    public function getReponses(): Collection
+    public function getReponsesPossibles(): Collection
     {
-        return $this->reponses;
+        return $this->reponsesPossibles;
     }
 
-    public function addReponse(Reponse $reponse): self
+    public function addReponsesPossible(ReponsePossible $reponsesPossible): self
     {
-        if (!$this->reponses->contains($reponse)) {
-            $this->reponses[] = $reponse;
-            $reponse->setQuestion($this);
+        if (!$this->reponsesPossibles->contains($reponsesPossible)) {
+            $this->reponsesPossibles[] = $reponsesPossible;
+            $reponsesPossible->setQuestion($this);
         }
 
         return $this;
     }
 
-    public function removeReponse(Reponse $reponse): self
+    public function removeReponsesPossible(ReponsePossible $reponsesPossible): self
     {
-        if ($this->reponses->contains($reponse)) {
-            $this->reponses->removeElement($reponse);
+        if ($this->reponsesPossibles->contains($reponsesPossible)) {
+            $this->reponsesPossibles->removeElement($reponsesPossible);
             // set the owning side to null (unless already changed)
-            if ($reponse->getQuestion() === $this) {
-                $reponse->setQuestion(null);
+            if ($reponsesPossible->getQuestion() === $this) {
+                $reponsesPossible->setQuestion(null);
             }
         }
 
