@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180704141137 extends AbstractMigration
+final class Version20180704143553 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -26,12 +26,12 @@ final class Version20180704141137 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_D6D86B2986EC68D8 ON enquete (tuteur_id)');
         $this->addSql('CREATE TABLE entreprise (id INTEGER NOT NULL, nom VARCHAR(255) NOT NULL, ville VARCHAR(255) NOT NULL, code_postal VARCHAR(5) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE formation (id INTEGER NOT NULL, intitule VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE question (id INTEGER NOT NULL, theme VARCHAR(255) NOT NULL, contenu CLOB NOT NULL, reponses CLOB DEFAULT NULL --(DC2Type:array)
-        , choix BOOLEAN NOT NULL, multiple BOOLEAN NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE reponse (id INTEGER NOT NULL, question_id INTEGER NOT NULL, enquete_id INTEGER NOT NULL, tuteur_id INTEGER NOT NULL, reponse VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE INDEX IDX_5FB6DEC71E27F6BF ON reponse (question_id)');
+        $this->addSql('CREATE TABLE question (id INTEGER NOT NULL, theme VARCHAR(255) NOT NULL, contenu CLOB NOT NULL, choix BOOLEAN NOT NULL, multiple BOOLEAN NOT NULL, reponses_possibles CLOB DEFAULT NULL --(DC2Type:array)
+        , PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE reponse (id INTEGER NOT NULL, enquete_id INTEGER NOT NULL, tuteur_id INTEGER NOT NULL, question_id INTEGER NOT NULL, reponse VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_5FB6DEC75FDC5003 ON reponse (enquete_id)');
         $this->addSql('CREATE INDEX IDX_5FB6DEC786EC68D8 ON reponse (tuteur_id)');
+        $this->addSql('CREATE INDEX IDX_5FB6DEC71E27F6BF ON reponse (question_id)');
         $this->addSql('CREATE TABLE stage (id INTEGER NOT NULL, duree_id INTEGER DEFAULT NULL, difficulte_id INTEGER DEFAULT NULL, stagiaire_id INTEGER NOT NULL, tuteur_id INTEGER DEFAULT NULL, date_debut DATE NOT NULL, date_fin DATE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_C27C9369D13C140 ON stage (duree_id)');
         $this->addSql('CREATE INDEX IDX_C27C9369E6357589 ON stage (difficulte_id)');

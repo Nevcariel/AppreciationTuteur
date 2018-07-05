@@ -89,10 +89,11 @@ class AppFixtures extends Fixture
         $question->setChoix(true);
         $question->setMultiple(false);
 
-        $question->addReponse($reponses);
+        $question->setReponsesPossibles($reponses);
         $reponse->setReponse($reponses[$i]);
         $tuteur->addReponse($reponse);
         $enquete->addReponse($reponse);
+        $question->addReponse($reponse);
 
 
         $manager->persist($difficulte);

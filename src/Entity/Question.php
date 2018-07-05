@@ -39,10 +39,20 @@ class Question
      */
     private $multiple;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $reponsesPossibles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reponse", mappedBy="question", orphanRemoval=true)
+     */
+    private $reponses;
+
 
     public function __construct()
     {
-        
+        $this->reponses = new ArrayCollection();
     }
 
     public function __toString(): ?string
@@ -99,6 +109,49 @@ class Question
     public function setMultiple(bool $multiple): self
     {
         $this->multiple = $multiple;
+
+        return $this;
+    }
+
+    public function getReponsesPossibles(): ?array
+    {
+        return $this->reponsesPossibles;
+    }
+
+    public function setReponsesPossibles(?array $reponsesPossibles): self
+    {
+        $this->reponsesPossibles = $reponsesPossibles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reponse[]
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): self
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses[] = $reponse;
+            $reponse->setQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): self
+    {
+        if ($this->reponses->contains($reponse)) {
+            $this->reponses->removeElement($reponse);
+            // set the owning side to null (unless already changed)
+            if ($reponse->getQuestion() === $this) {
+                $reponse->setQuestion(null);
+            }
+        }
 
         return $this;
     }

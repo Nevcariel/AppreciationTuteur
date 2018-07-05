@@ -34,6 +34,12 @@ class Reponse
      */
     private $tuteur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="reponses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
+
     public function getId()
     {
         return $this->id;
@@ -71,6 +77,18 @@ class Reponse
     public function setTuteur(?Tuteur $tuteur): self
     {
         $this->tuteur = $tuteur;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }
